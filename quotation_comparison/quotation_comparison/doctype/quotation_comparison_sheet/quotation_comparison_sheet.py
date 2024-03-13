@@ -41,6 +41,7 @@ class QuotationComparisonSheet(Document):
 				for supplier in suppliers:
 					po_doc = frappe.new_doc('Purchase Order')
 					po_doc.supplier = supplier
+					po_doc.company = self.company
 					for item in self.items:
 						if supplier == item.supplier:
 							po_doc.transaction_date = item.date
@@ -54,6 +55,7 @@ class QuotationComparisonSheet(Document):
 							po_item.warehouse = item.warehouse
 							po_item.schedule_date = item.date
 							po_item.expected_delivery_date = item.delivery_date
+					frappe.msgprint(_("Creating Purchase Orders..." + po_doc.company), alert=True, indicator='green')
 					po_doc.save()
 					po_link = get_url_to_form('Purchase Order', po_doc.name)
 					frappe.msgprint(_("Purchase Order Created.<a href='{0}'>Click here</a>".format(po_link)), alert=True, indicator='green')

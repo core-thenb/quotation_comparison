@@ -12,6 +12,7 @@
   "column_break_h3ufw",
   "required_date",
   "prepared_by",
+  "company",
   "quotations_section",
   "quotations",
   "quotation_items",
@@ -75,8 +76,7 @@
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
-   "options": "Quotation Comparison Sheet Item",
-   "read_only": 1
+   "options": "Quotation Comparison Sheet Item"
   },
   {
    "fieldname": "section_break_nxowt",
@@ -119,12 +119,22 @@
    "hidden": 1,
    "label": "PO Created",
    "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "print_hide": 1,
+   "remember_last_selected_value": 1,
+   "reqd": 1,
+   "set_only_once": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-02-17 16:51:55.390751",
+ "modified": "2024-03-08 23:04:17.501351",
  "modified_by": "Administrator",
  "module": "Quotation Comparison",
  "name": "Quotation Comparison Sheet",
