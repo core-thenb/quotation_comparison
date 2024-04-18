@@ -1,0 +1,51 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"eu9Xg0Nm5v\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Quotation comparison</span>\",\"col\":12}},{\"id\":\"xEAgrbiJOw\",\"type\":\"card\",\"data\":{\"card_name\":\"Doctype\",\"col\":4}}]",
+ "creation": "2023-07-27 12:55:10.111428",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "image-view",
+ "idx": 1,
+ "is_hidden": 0,
+ "label": "Quotation comparison",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Doctype",
+   "link_count": 1,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Quotation Comparison Sheet",
+   "link_count": 0,
+   "link_to": "Quotation Comparison Sheet",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-04-18 21:33:04.782357",
+ "modified_by": "Administrator",
+ "module": "Quotation Comparison",
+ "name": "Quotation comparison",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Purchase User"
+  }
+ ],
+ "sequence_id": 7.0,
+ "shortcuts": [],
+ "title": "Quotation comparison"
+}
