@@ -51,6 +51,10 @@ class QuotationComparisonSheet(Document):
 							po_item.rate = item.rate
 							po_item.uom = item.uom
 							po_item.amount = item.amount
+							# Discount amount
+							po_item.discount_amount = item.amount - item.final_amount
+							# Discounted price (Final price)
+							# net_amount
 							po_item.supplier_quotation = item.quotation
 							po_item.warehouse = item.warehouse
 							po_item.schedule_date = item.date
@@ -75,6 +79,7 @@ def get_quotation_against_rfq(rfq):
 		WHERE
 			sqi.request_for_quotation = %(request_for_quotation)s
 			AND sqi.parent = sq.name
+			AND sq.status NOT IN ('Expired', 'Cancelled');
 	'''
 	quotations = frappe.db.sql(query.format(), { 'request_for_quotation':rfq }, as_dict = True)
 	for quotation in quotations:

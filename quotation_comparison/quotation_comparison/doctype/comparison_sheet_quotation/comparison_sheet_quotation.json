@@ -13,7 +13,9 @@
   "date",
   "grand_total",
   "section_break_yoaff",
-  "item_details"
+  "item_details",
+  "section_break_xjph",
+  "terms"
  ],
  "fields": [
   {
@@ -70,12 +72,21 @@
    "fieldtype": "Text Editor",
    "label": "Item Details",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_xjph",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "terms",
+   "fieldtype": "Long Text",
+   "label": "Terms"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-02-15 14:22:36.638186",
+ "modified": "2024-06-12 23:09:45.689876",
  "modified_by": "Administrator",
  "module": "Quotation Comparison",
  "name": "Comparison Sheet Quotation",

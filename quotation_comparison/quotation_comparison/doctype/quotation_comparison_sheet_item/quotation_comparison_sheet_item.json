@@ -5,11 +5,13 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "quotation",
   "supplier",
   "item_code",
-  "qty",
   "rate",
+  "qty",
+  "amount",
+  "final_amount",
+  "quotation",
   "date",
   "quotation_remarks",
   "column_break_f99hl",
@@ -18,11 +20,11 @@
   "item_name",
   "description",
   "uom",
-  "amount",
   "warehouse"
  ],
  "fields": [
   {
+   "columns": 2,
    "fieldname": "supplier",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -31,6 +33,7 @@
    "reqd": 1
   },
   {
+   "columns": 2,
    "fieldname": "item_code",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -40,13 +43,16 @@
   },
   {
    "bold": 1,
+   "columns": 1,
    "fieldname": "qty",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Quantity",
+   "non_negative": 1,
    "reqd": 1
   },
   {
+   "columns": 1,
    "fieldname": "rate",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -76,8 +82,10 @@
    "label": "Supplier Name"
   },
   {
+   "columns": 2,
    "fieldname": "quotation",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Quotation",
    "options": "Supplier Quotation",
    "reqd": 1
@@ -106,9 +114,11 @@
    "label": "Delivery Date"
   },
   {
+   "columns": 2,
    "default": "0",
    "fieldname": "amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Amount",
    "reqd": 1
   },
@@ -119,12 +129,22 @@
    "in_list_view": 1,
    "label": "UOM",
    "options": "UOM"
+  },
+  {
+   "columns": 2,
+   "default": "0",
+   "fieldname": "final_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Final Amount",
+   "non_negative": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-10 10:30:30.611871",
+ "modified": "2024-06-13 08:52:17.904730",
  "modified_by": "Administrator",
  "module": "Quotation Comparison",
  "name": "Quotation Comparison Sheet Item",

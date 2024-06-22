@@ -40,6 +40,7 @@ var set_quotation_against_rfq = function(frm) {
                         qtn.supplier = quotation.supplier;
                         qtn.date = quotation.transaction_date;
                         qtn.grand_total = quotation.grand_total;
+                        qtn.terms = quotation.terms;
                         qtn.item_details = get_quotation_item_details(frm, quotation);
                     });
                     frm.refresh_field('quotations');
