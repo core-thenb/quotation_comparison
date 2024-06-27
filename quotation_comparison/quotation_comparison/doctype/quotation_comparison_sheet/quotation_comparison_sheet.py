@@ -67,6 +67,11 @@ class QuotationComparisonSheet(Document):
 			frappe.db.commit()
 
 @frappe.whitelist()
+def get_items_against_quotations(quotation_name):
+	return frappe.get_doc('Supplier Quotation', quotation_name)
+
+     
+@frappe.whitelist()
 def get_quotation_against_rfq(rfq):
 	'''Mthod to make a list of quotations against rfq'''
 	quotation_list = []

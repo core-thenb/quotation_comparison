@@ -7,6 +7,11 @@ frappe.ui.form.on('Quotation Comparison Sheet', {
             frm.trigger('request_for_quotation');
         }
         set_custom_buttons(frm);
+        // if compare_quotation_by is set, then show the choose_quotation_and_supplier_for_item_section and section_break_nxowt sections
+        if (frm.doc.compare_quotation_by) {
+            frm.toggle_display('choose_quotation_and_supplier_for_item_section', true);
+            frm.toggle_display('section_break_nxowt', true);
+        }
     },
     request_for_quotation: function(frm) {
         set_quotation_against_rfq(frm);
@@ -23,6 +28,53 @@ frappe.ui.form.on('Quotation Comparison Sheet', {
         });
     }
 });
+
+frappe.ui.form.on("Comparison Sheet Quotation", {
+    quotations_remove(frm, cdt, cdn) {
+        set_items_against_quotations(frm);
+    },
+    quotation(frm, cdt, cdn) {
+        set_items_against_quotations(frm);
+    }
+});
+
+var set_items_against_quotations = function(frm) {
+    quotations = frm.doc.quotations;
+    let dirty = false;
+    for (index in frm.doc.quotations) {
+        qtn = frm.doc.quotations[index];
+        quote = qtn["quotation"];
+        if (quote){
+            if (!dirty) {
+                // first instance of quotation present
+                frm.clear_table('quotation_items');
+            }
+            dirty = true;
+            frappe.call({
+                method: 'quotation_comparison.quotation_comparison.doctype.quotation_comparison_sheet.quotation_comparison_sheet.get_items_against_quotations',
+                args: { 'quotation_name':  quote},
+                callback: function(r) {
+                    if (r && r.message) {
+                        var quotation = r.message;
+                        // var qtn = frm.add_child('quotations');
+                        // qtn.quotation = quotation.name;
+                        // qtn.supplier = quotation.supplier;
+                        // qtn.date = quotation.transaction_date;
+                        // qtn.grand_total = quotation.grand_total;
+                        // qtn.terms = quotation.terms;
+                        qtn.item_details = get_quotation_item_details(frm, quotation);
+                        frm.refresh_field('quotations');
+                        frm.refresh_field('quotation_items');            
+                    }
+                }
+            });
+        }
+    }
+    if (dirty) {
+        frm.refresh_field('quotations');
+        frm.refresh_field('quotation_items');            
+    }
+}
 
 var set_quotation_against_rfq = function(frm) {
     if (frm.doc.request_for_quotation) {
@@ -152,6 +204,9 @@ let create_purchase_orders = function(frm, type) {
 
 // Function to fetch and set items from quotation items
 let fetch_quotation_items = function(frm) {
+    if (frm.is_dirty()) {
+        frappe.throw(__('Please save document before Analyse..'));
+    }
     let quotation_items = frm.doc.quotation_items;
     frm.clear_table('items');
     frm.doc.compare_quotation_by = 'Item Wise';
@@ -170,6 +225,8 @@ let fetch_quotation_items = function(frm) {
         new_item.rate = item.rate;
         new_item.uom = item.uom;
         new_item.amount = item.amount;
+        new_item.final_amount = item.amount;
     });
     frm.refresh_field('items');
+    frm.save();
 };
