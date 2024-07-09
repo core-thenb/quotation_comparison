@@ -41,6 +41,7 @@ frappe.ui.form.on("Comparison Sheet Quotation", {
 var set_items_against_quotations = function(frm) {
     quotations = frm.doc.quotations;
     let dirty = false;
+    let common_item_list = {};
     for (index in frm.doc.quotations) {
         qtn = frm.doc.quotations[index];
         quote = qtn["quotation"];
@@ -62,7 +63,7 @@ var set_items_against_quotations = function(frm) {
                         // qtn.date = quotation.transaction_date;
                         // qtn.grand_total = quotation.grand_total;
                         // qtn.terms = quotation.terms;
-                        qtn.item_details = get_quotation_item_details(frm, quotation);
+                        qtn.item_details = get_quotation_item_details(frm, quotation, common_item_list);
                         frm.refresh_field('quotations');
                         frm.refresh_field('quotation_items');            
                     }
@@ -86,6 +87,7 @@ var set_quotation_against_rfq = function(frm) {
             callback: function(r) {
                 if (r && r.message) {
                     var quotations = r.message;
+                    let common_item_list = {}; 
                     quotations.forEach((quotation, i) => {
                         var qtn = frm.add_child('quotations');
                         qtn.quotation = quotation.name;
@@ -93,7 +95,7 @@ var set_quotation_against_rfq = function(frm) {
                         qtn.date = quotation.transaction_date;
                         qtn.grand_total = quotation.grand_total;
                         qtn.terms = quotation.terms;
-                        qtn.item_details = get_quotation_item_details(frm, quotation);
+                        qtn.item_details = get_quotation_item_details(frm, quotation, common_item_list);
                     });
                     frm.refresh_field('quotations');
                     frm.refresh_field('quotation_items');
@@ -105,7 +107,7 @@ var set_quotation_against_rfq = function(frm) {
     }
 };
 
-var get_quotation_item_details = function(frm, quotation) {
+var get_quotation_item_details = function(frm, quotation, common_item_list = null) {
     var quotation_item_details_html = `<table border="1px grey"  bordercolor="silver" style="width: 100%; height="100"">
         <th><b>Item Name</b></th>
         <th><b>Quantity</b></th>
@@ -124,8 +126,37 @@ var get_quotation_item_details = function(frm, quotation) {
         quotation_item_details_html += `<td style="width: 8%">` + (val.uom ? val.uom : '') + "</td>";
         quotation_item_details_html += `<td style="width: 14% word-wrap: break-all" contenteditable = 'false'>` + (val.description ? val.description : '') + "</td>";
         quotation_item_details_html += `</tr>`;
-        set_quotation_item_details(frm, val, quotation);
+        if (common_item_list == null){
+            set_quotation_item_details(frm, val, quotation);
+        }
     });
+
+    if (common_item_list !=null){
+        // Collect all items from all quotations and group by item name
+        quotation.items.forEach(function(val) {
+            item_code = val.item_code;
+            if (common_item_list[item_code]) {
+                // BUG: val is being taken as string
+                // TODO: make it 
+                common_item_list[item_code].push({item: val, quotation: quotation});
+            } else {
+                common_item_list[item_code] = [{item: val, quotation: quotation}];
+            }
+        });
+
+        frm.clear_table('quotation_items');  // common_item_list will have all items, clear the old table first
+        // Process items grouped by item name
+        Object.keys(common_item_list).forEach(function(item_code) {
+            var entries = common_item_list[item_code];
+            entries.forEach(function(entry) {
+                var val = entry.item;
+                var quotation = entry.quotation;
+
+                set_quotation_item_details(frm, val, quotation);
+            });
+        });
+    }
+
     quotation_item_details_html += `</table>`;
     return quotation_item_details_html;
 };
