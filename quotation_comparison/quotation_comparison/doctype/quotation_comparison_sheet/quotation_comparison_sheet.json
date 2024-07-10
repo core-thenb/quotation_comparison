@@ -116,9 +116,7 @@
    "default": "0",
    "fieldname": "po_created",
    "fieldtype": "Check",
-   "hidden": 1,
-   "label": "PO Created",
-   "read_only": 1
+   "label": "PO Created"
   },
   {
    "fieldname": "company",
@@ -134,7 +132,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-06-27 10:52:40.995387",
+ "modified": "2024-07-10 19:40:16.140947",
  "modified_by": "Administrator",
  "module": "Quotation Comparison",
  "name": "Quotation Comparison Sheet",
