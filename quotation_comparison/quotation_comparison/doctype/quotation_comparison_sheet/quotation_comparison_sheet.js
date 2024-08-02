@@ -172,7 +172,7 @@ var set_quotation_item_details = function(frm, item, quotation) {
     qtn_item.delivery_date = quotation.transaction_date;
     qtn_item.qty = item.qty;
     qtn_item.uom = item.uom;
-    qtn_item.rate = item.rate;
+    qtn_item.rate = item.rate * (1+(item.sgst_rate + item.cgst_rate + item.igst_rate)/100);
     qtn_item.amount = item.amount;
     qtn_item.warehouse = item.warehouse;
 };
